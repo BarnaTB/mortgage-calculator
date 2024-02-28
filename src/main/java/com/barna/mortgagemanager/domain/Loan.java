@@ -1,5 +1,7 @@
 package com.barna.mortgagemanager.domain;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +15,10 @@ import lombok.NoArgsConstructor;
 public class Loan {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
 
-    private byte years;
+    private int years;
 
     private float annualInterestRate;
 

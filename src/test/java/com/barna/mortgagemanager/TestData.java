@@ -11,7 +11,7 @@ public final class  TestData {
     public static Loan testLoan() {
         return Loan.builder()
                 .annualInterestRate(3.5F)
-                .years((byte) 5)
+                .years(5)
                 .principal(30000000)
                 .build();
     }
@@ -19,7 +19,7 @@ public final class  TestData {
     public static LoanEntity testLoanEntity() {
         return LoanEntity.builder()
                 .annualInterestRate(3.5F)
-                .years((byte) 5)
+                .years(5)
                 .principal(30000000)
                 .build();
     }

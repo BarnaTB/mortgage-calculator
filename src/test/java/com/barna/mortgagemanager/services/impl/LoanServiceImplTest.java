@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -37,5 +39,27 @@ public class LoanServiceImplTest {
         final Loan result = underTest.create(loan);
 
         assertEquals(loan, result);
+    }
+
+    @Test
+    public void testThatFindByIdReturnsEmptyWhenNoLoan() {
+        final String id = "123123123123";
+        when(loanRepository.findById(eq(id)))
+                .thenReturn(Optional.empty());
+
+        final Optional<Loan> result = underTest.findById(id);
+        assertEquals(Optional.empty(), result);
+    }
+
+    @Test
+    public void testThatFindByIdReturnsLoanWhenOneExists() {
+        final Loan loan = testLoan();
+        final LoanEntity loanEntity = testLoanEntity();
+
+        when(loanRepository.findById(String.valueOf(eq(Optional.ofNullable(loan.getId())))))
+                .thenReturn(Optional.of(loanEntity));
+
+        final Optional<Loan> result = underTest.findById(loan.getId());
+        assertEquals(Optional.of(loan), result);
     }
 }

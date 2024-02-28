@@ -5,9 +5,9 @@ import com.barna.mortgagemanager.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
@@ -28,6 +28,13 @@ public class LoanController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
+    }
+
+    @GetMapping("/loans/{id}")
+    public ResponseEntity<Loan> retrieveLoan(@PathVariable final String id) {
+        final Optional<Loan> foundLoan = loanService.findById(id);
+        return foundLoan.map(loan -> new ResponseEntity<Loan>(loan, HttpStatus.OK))
+                .orElse(new ResponseEntity<Loan> (HttpStatus.NOT_FOUND));
     }
 
     static class ErrorResponse {

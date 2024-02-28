@@ -16,9 +16,9 @@ public class LoanEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    private byte years;
+    private int years;
 
     private float annualInterestRate;
 

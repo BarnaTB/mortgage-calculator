@@ -7,6 +7,8 @@ import com.barna.mortgagemanager.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class LoanServiceImpl implements LoanService {
 
@@ -23,6 +25,13 @@ public class LoanServiceImpl implements LoanService {
         final LoanEntity savedLoanEntity = loanRepository.save(loanEntity);
 
         return loanEntityToLoan(savedLoanEntity);
+    }
+
+    @Override
+    public Optional<Loan> findById(String id) {
+        final Optional<LoanEntity> foundLoan = loanRepository.findById(id);
+        foundLoan.map(loan -> loanEntityToLoan(loan));
+        return Optional.empty();
     }
 
     private LoanEntity loanToLoanEntity(Loan loan) {
